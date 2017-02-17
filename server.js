@@ -22,7 +22,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.text());
 app.use(bodyParser.json({type:'application/vnd.api+json'}));
 
-
 //MIDDLEWARE - HANDLEBARS! Folder and file extension customization.
 app.engine('hbs', hbs({extname:'hbs', defaultLayout: 'main', layoutsDir: __dirname + '/views/layouts'}));
 app.set('views', path.join(__dirname, 'views'));
@@ -48,13 +47,12 @@ var Picture = connection.define('picture', {
   }
 })
 
-//
-
 app.get('/', (req, res) => {
   // set up a cheerio rip to rip the three reddits and store to MySQL.
 
   let source = ["earthporn", "villageporn","cityporn"];
-  let results = {}
+
+  let result = {}
 
   _.each(source, (value, key) => {
 
@@ -102,13 +100,16 @@ app.get('/', (req, res) => {
 
             connection.sync({
               logging: console.log
+            }).then(() => {
+              result[value].i == hit;
             });
     			}
       })
     })
   });
 
-  res.send('Hello, World.')
+
+  res.render('index', result)
 });
 
 
