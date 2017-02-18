@@ -120,32 +120,35 @@ app.get('/', (req, res) => {
 
 app.get('/earth', (req,res) => {
   Picture.findAll({
+    order: '`id` DESC',
     where: {
       origin: "earthporn"
     }
   }).then((data) => {
-    res.json(data);
+    res.render('pics', {data});
   });
 })
 
 app.get('/village', (req,res) => {
   Picture.findAll({
+    order: '`id` DESC',
     where: {
       origin: "villageporn"
     }
   }).then((data) => {
-    res.json(data);
+    res.render('pics', {data});
   })
 })
 
 
 app.get('/city', (req,res) => {
   Picture.findAll({
+    order: '`id` DESC',
     where: {
-      origin: "cityporn"
+      origin: "cityporn",
     }
   }).then((data) => {
-    res.json(data);
+    res.render('pics', {data});
   });
 })
 
