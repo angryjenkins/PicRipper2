@@ -1,0 +1,20 @@
+.demoPane {
+  border: 2px solid black;
+  height: 200px;
+}
+
+#earthPreview-content, #villagePreview-content, #cityPreview-content {
+  display:none;
+}
+
+#earthPreview:hover #earthPreview-content {
+  display:block;
+}
+
+#villagePreview:hover #villagePreview-content {
+  display:block;
+}
+
+#cityPreview:hover #cityPreview-content {
+  display:block;
+}

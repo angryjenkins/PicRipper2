@@ -27,7 +27,7 @@ app.engine('hbs', hbs({extname:'hbs', defaultLayout: 'main', layoutsDir: __dirna
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-var Picture = connection.define('picture', {
+const Picture = connection.define('picture', {
   title: {
     type:Sequelize.STRING,
     unique: true
@@ -47,71 +47,107 @@ var Picture = connection.define('picture', {
   }
 })
 
-app.get('/', (req, res) => {
-  // set up a cheerio rip to rip the three reddits and store to MySQL.
+var source = ["earthporn", "villageporn","cityporn"];
 
-  let source = ["earthporn", "villageporn","cityporn"];
+var results = []
 
-  let result = {}
+// set up a cheerio rip to rip the three reddits and store to MySQL.
 
-  _.each(source, (value, key) => {
+_.each(source, (value, key) => {
 
-    switch (key) {
-      case 0:
-        var redditPage = "https://www.reddit.com/r/Earthporn";
-        break;
-      case 1:
-        var redditPage = "https://www.reddit.com/r/Villageporn";
-        break;
-      case 2:
-        var redditPage = "https://www.reddit.com/r/Cityporn";
-        break;
-    }
+  switch (key) {
+    case 0:
+      var redditPage = "https://www.reddit.com/r/Earthporn";
+      break;
+    case 1:
+      var redditPage = "https://www.reddit.com/r/Villageporn";
+      break;
+    case 2:
+      var redditPage = "https://www.reddit.com/r/Cityporn";
+      break;
+  }
 
-    axios.get(redditPage)
-      .then((response) => {
+  axios.get(redditPage)
+    .then((response) => {
 
-        var $ = cheerio.load(response.data);
+      var $ = cheerio.load(response.data);
 
-  	    $('a.title').each(function(i, element) {
-          var hit = {};
+      $('a.title').each(function(i, element) {
+        var hit = {};
 
-    			hit.title = $(this).text();
-          hit.origin = value;
-					hit.poster = $(this).siblings('a.author').text();
+        hit.title = $(this).text();
+        hit.origin = value;
+        hit.poster = $(this).siblings('a.author').text();
 
-    			var thisLink = $(this).attr('href');
+        var thisLink = $(this).attr('href');
 
-    			//this limits only those links whose last 3 letters are JPG or PNG.
-    			if(thisLink.slice(-3) == "jpg" || thisLink.slice(-3) == 'png'){
-    				hit.url = thisLink;
-            // console.log(result[i].url)
+        //this limits only those links whose last 3 letters are JPG or PNG.
+        if(thisLink.slice(-3) == "jpg" || thisLink.slice(-3) == 'png'){
+          hit.url = thisLink;
+          // console.log(result[i].url)
 
-            // var results.value.i = result;
+          // var results.value.i = result;
 
-            console.log(hit);
+          console.log(hit);
 
-            Picture.create({
-              title: hit.title,
-              url: hit.url,
-              origin: hit.origin,
-              poster: hit.poster
-            });
+          Picture.create({
+            title: hit.title,
+            url: hit.url,
+            origin: hit.origin,
+            poster: hit.poster
+          });
 
-            connection.sync({
-              logging: console.log
-            }).then(() => {
-              result[value].i == hit;
-            });
-    			}
-      })
+          connection.sync({
+            logging: console.log
+          }).then((hit) => {
+          results.push(hit);
+            return results;
+          }).catch((error) => {
+            throw error;
+          });
+        }
     })
-  });
-
-
-  res.render('index', result)
+  })
 });
 
+app.get('/', (req, res) => {
+  res.render('index',{
+    date: Date.now(),
+    name: "Matthew N. Martin"
+  });
+});
+
+
+app.get('/earth', (req,res) => {
+  Picture.findAll({
+    where: {
+      origin: "earthporn"
+    }
+  }).then((data) => {
+    res.json(data);
+  });
+})
+
+app.get('/village', (req,res) => {
+  Picture.findAll({
+    where: {
+      origin: "villageporn"
+    }
+  }).then((data) => {
+    res.json(data);
+  })
+})
+
+
+app.get('/city', (req,res) => {
+  Picture.findAll({
+    where: {
+      origin: "cityporn"
+    }
+  }).then((data) => {
+    res.json(data);
+  });
+})
 
 //EXPRESS - static files.
 app.use('/public',express.static('public'));
