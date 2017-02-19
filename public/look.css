@@ -3,7 +3,7 @@
   height: 200px;
 }
 
-#earthPreview-content, #villagePreview-content, #cityPreview-content {
+#earthPreview-content, #villagePreview-content, #cityPreview-content, #spacePreview-content {
   display:none;
 }
 
@@ -16,5 +16,9 @@
 }
 
 #cityPreview:hover #cityPreview-content {
+  display:block;
+}
+
+#spacePreview:hover #spacePreview-content {
   display:block;
 }

@@ -47,7 +47,7 @@ const Picture = connection.define('picture', {
   }
 })
 
-var source = ["earthporn", "villageporn","cityporn"];
+var source = ["earthporn", "villageporn","cityporn","spaceporn"];
 
 var results = []
 
@@ -64,6 +64,9 @@ _.each(source, (value, key) => {
       break;
     case 2:
       var redditPage = "https://www.reddit.com/r/Cityporn";
+      break;
+    case 3:
+      var redditPage = "https://www.reddit.com/r/Spaceporn";
       break;
   }
 
@@ -146,6 +149,17 @@ app.get('/city', (req,res) => {
     }
   }).then((data) => {
     res.render('pics', {data,origin:"cityporn"});
+  });
+})
+
+app.get('/space', (req,res) => {
+  Picture.findAll({
+    order: '`id` DESC',
+    where: {
+      origin: "spaceporn",
+    }
+  }).then((data) => {
+    res.render('pics', {data,origin:"spaceporn"});
   });
 })
 

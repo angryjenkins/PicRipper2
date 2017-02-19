@@ -10,6 +10,8 @@ $(document).ready(function(){
   });
 });
 
+//MomentJS functions.
+
 function dateFormatter(date){
   var format = "LLLL";
   return moment(date).format(format);
