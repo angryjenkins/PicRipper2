@@ -9,3 +9,8 @@ $(document).ready(function(){
     slidesToScroll: 1
   });
 });
+
+function dateFormatter(date){
+  var format = "LLLL";
+  return moment(date).format(format);
+}

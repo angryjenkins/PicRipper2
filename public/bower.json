@@ -1,0 +1,30 @@
+{
+  "name": "pictureRipper",
+  "homepage": "www.angryjenkins.com",
+  "authors": [
+    "@angryjenkins"
+  ],
+  "description": "ripping images with reddit, mysql and cheerio.",
+  "main": "server.js",
+  "keywords": [
+    "reddit",
+    "rip",
+    "images",
+    "cheerio",
+    "node"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "materialize": "^0.98.0",
+    "moment": "momentjs#^2.17.1",
+    "slick-carousel": "^1.6.0"
+  }
+}
