@@ -18,3 +18,7 @@
 #cityPreview:hover #cityPreview-content {
   display:block;
 }
+
+.image-slide-grid {
+  background-size:cover; height:200px; color:white;
+}

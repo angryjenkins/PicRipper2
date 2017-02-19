@@ -111,10 +111,7 @@ _.each(source, (value, key) => {
 });
 
 app.get('/', (req, res) => {
-  res.render('index',{
-    date: Date.now(),
-    name: "Matthew N. Martin"
-  });
+  res.render('index');
 });
 
 
@@ -125,7 +122,7 @@ app.get('/earth', (req,res) => {
       origin: "earthporn"
     }
   }).then((data) => {
-    res.render('pics', {data});
+    res.render('pics',{data,origin:"earthporn"});
   });
 })
 
@@ -136,7 +133,7 @@ app.get('/village', (req,res) => {
       origin: "villageporn"
     }
   }).then((data) => {
-    res.render('pics', {data});
+    res.render('pics', {data,origin:"villageporn"});
   })
 })
 
@@ -148,7 +145,7 @@ app.get('/city', (req,res) => {
       origin: "cityporn",
     }
   }).then((data) => {
-    res.render('pics', {data});
+    res.render('pics', {data,origin:"cityporn"});
   });
 })
 
