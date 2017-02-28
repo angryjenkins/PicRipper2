@@ -45,7 +45,7 @@ const Picture = connection.define('picture', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   }
-})
+});
 
 var source = ["earthporn", "villageporn","cityporn","spaceporn"];
 
