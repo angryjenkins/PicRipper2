@@ -1,6 +1,6 @@
 
-// To use lazy loading, set a data-lazy attribute
-// on your img tags and leave off the src
+To use lazy loading, set a data-lazy attribute
+on your img tags and leave off the src
 
 $(document).ready(function(){
   $('.slides').slick({
